@@ -1,4 +1,4 @@
-FROM rust:1.72-alpine3.18 as builder
+FROM rustlang/rust:nightly-alpine3.17 as builder
 
 RUN wget https://github.com/cargo-bins/cargo-binstall/releases/latest/download/cargo-binstall-x86_64-unknown-linux-musl.tgz
 RUN tar -xvf cargo-binstall-x86_64-unknown-linux-musl.tgz
@@ -22,11 +22,11 @@ RUN rustup target add wasm32-unknown-unknown
 # Build the app
 RUN cargo leptos build --release -vv
 
-FROM rust:1.70-alpine as runner
+FROM rustlang/rust:nightly-alpine3.17 as runner
 # Copy the server binary to the /app directory
 COPY --from=builder /app/target/server/release/leptos_leverage_calculator /app/
 # /target/site contains our JS/WASM/CSS, etc.
-COPY --from=builder /app/target/site /app/site
+COPY --from=builder /app/target/site /app/target/site
 # Copy Cargo.toml if it’s needed at runtime
 COPY --from=builder /app/Cargo.toml /app/
 WORKDIR /app
