@@ -7,17 +7,17 @@ pub fn Calculator(cx: Scope) -> impl IntoView {
     let (name, set_name) = create_signal(cx, "Name".to_string());
 
     let on_click = move |_| set_count.update(|count| *count += 1);
-    let on_input = move |e: Event | set_name(event_target_value(&e));
+    let on_input = move |e: Event | set_name.set(event_target_value(&e));
 
     view! { cx,
         <h1>"Leverage calculator"</h1>
-        <button on:click=on_click>{name}":" {count}</button>
+        <button on:click=on_click>{name.get()}":" {count.get()}</button>
         <br/>
         <input
             placeholder="lele"
             type="text"
             on:input=on_input
-            prop:value=name
+            prop:value=name.get()
         />
     }
 }

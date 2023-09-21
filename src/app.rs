@@ -1,5 +1,4 @@
 use leptos::*;
-use leptos::svg::path;
 use leptos_meta::*;
 use leptos_router::*;
 mod home_page;

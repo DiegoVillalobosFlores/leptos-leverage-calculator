@@ -24,7 +24,7 @@ RUN cargo leptos build --release -vv
 
 FROM rust:1.70-alpine as runner
 # Copy the server binary to the /app directory
-COPY --from=builder /app/target/server/release/leptos_start /app/
+COPY --from=builder /app/target/server/release/leptos_leverage_calculator /app/
 # /target/site contains our JS/WASM/CSS, etc.
 COPY --from=builder /app/target/site /app/site
 # Copy Cargo.toml if it’s needed at runtime
@@ -38,4 +38,4 @@ ENV LEPTOS_SITE_ADDR="0.0.0.0:3000"
 ENV LEPTOS_SITE_ROOT="target/site"
 EXPOSE 3000
 # Run the server
-CMD ["/app/leptos_start"]
+CMD ["/app/leptos_leverage_calculator"]
